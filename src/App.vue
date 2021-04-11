@@ -1,17 +1,37 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+        <span>Tarea: </span>
+    <input v-model="nuevaTarea" placeholder="Ingresa una nueva tarea">
+    <button @click="agregarTarea()" class="btn btn-primary">Añadir</button>
+    <Lista :tareas="tareas" @indexTarea="indexT = $event" />
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import Lista from "./components/Lista.vue";
 
 export default {
   name: "App",
   components: {
-    HelloWorld,
+    Lista,
+  },
+    data() {
+    return {
+      nuevaTarea: "",
+      tareas: [],
+      indexT: ""
+    }
+  },
+      methods: {
+    agregarTarea() {
+      if (!this.nuevaTarea) return alert('Ingresa una tarea');
+      this.tareas.push({tarea: this.nuevaTarea})
+      this.limpiar()
+    },
+    limpiar(){
+      this.nuevaTarea = ""
+    }
   },
 };
 </script>
@@ -24,5 +44,9 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+input{
+  margin: 1rem;
 }
 </style>
